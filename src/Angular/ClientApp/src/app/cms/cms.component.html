@@ -1,0 +1,24 @@
+<header class="site-header" [ngClass]="{'site-header-dark': !isLoading && !model.Heading.PrimaryImage.HasValue}">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-faded">
+          <button class="navbar-toggler navbar-toggler-right" aria-label="Toggle navigation" (click)="toggle()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" routerLink="/"></a>
+          <div class="collapse navbar-collapse justify-content-sm-center" [ngClass]='{ "show": isExpanded }'>
+            <ul class="nav nav-site">
+              <li *ngFor="let item of sitemap" class="nav-item" [ngClass]="{'active': currentPage === item.Permalink}">
+                <a class="nav-link" [routerLink]="item.Permalink" (click)="collapse()">
+                  <span>{{item.MenuTitle}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<router-outlet></router-outlet>

@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
+# Piranha Core Angular Files and Folders
+/src/Angular/wwwroot/uploads/*
+/src/Angular/piranha.db

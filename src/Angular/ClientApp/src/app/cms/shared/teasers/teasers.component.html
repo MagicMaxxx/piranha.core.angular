@@ -1,0 +1,17 @@
+<ng-container *ngIf="hasTeasers">
+  <div *ngFor="let teaser of model" class="row justify-content-center teasers">
+    <div class="col-sm-6 col-md-{{teaserWidth}} teaser">
+      <div class="teaser-body">
+        <span class="teaser-subtitle">{{teaser.SubTitle.Value}}</span>
+        <h3>{{teaser.Title.Value}}</h3>
+        <p [innerHTML]="teaser.Body.Value"></p>
+        <p *ngIf="teaser.PageLink.HasValue">
+          <a [routerLink]="teaser.PageLink.Permalink">Read more..</a>
+        </p>
+        <p *ngIf="!teaser.PageLink.HasValue && teaser.PostLink.HasValue">
+          <a [routerLink]="teaser.PostLink.Permalink">Read more..</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>

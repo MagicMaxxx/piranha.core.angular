@@ -1,0 +1,22 @@
+<div class="main" *ngIf="!isLoading">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-10 post-header">
+        <h1>{{model.Title}}</h1>
+        <ng-container *ngIf="model.Tags.length > 0">
+          <span *ngFor="let tag of model.Tags" class="tag"># {{tag.Title}}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="row" *ngIf="model.Heading.PrimaryImage.HasValue">
+      <div class="col-sm post-header">
+        <img class="img-fluid" [src]="model.Heading.PrimaryImage.Url">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-10 post-body">
+        <block *ngFor="let block of model.Blocks" [model]="block"></block>
+      </div>
+    </div>
+  </div>
+</div>

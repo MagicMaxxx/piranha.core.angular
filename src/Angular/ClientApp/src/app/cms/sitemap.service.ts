@@ -24,10 +24,16 @@ export class SitemapService {
       } else {
         this.cmsService.getSiteMap()
           .subscribe((result) => {
-            this.sitemap = result;
-            this.onSuccessfulGetSiteMap(result);
-            observ.next(result);
+            if (result.length > 0) {
+              this.sitemap = result;
+              this.onSuccessfulGetSiteMap(result);
+              observ.next(result);
+            } else {
+              this.router.navigate(["/setup"]);
+            }
+
             observ.complete();
+           
           },
             (errors: any) => {
               this.onUnsuccessful(errors);

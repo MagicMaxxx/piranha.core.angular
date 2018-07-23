@@ -50,22 +50,7 @@ namespace Angular.Controllers
             serializerSettings.Converters.Add(new ImageCoverter(api));
             serializerSettings.Converters.Add(new PageFieldCoverter());
             serializerSettings.Converters.Add(new PostFieldCoverter());
-        }
-
-        /// <summary>
-        /// Gets the page with the specified id.
-        /// </summary>
-        /// <param name="id">The unique id</param>
-        [HttpGet("init")]
-        public IActionResult Init(string route)
-        {
-            var sitemap = GetSiteMap();
-            var sitemapJson = JsonConvert.SerializeObject(sitemap, serializerSettings);
-
-            var modelJson = "";
-            //var json = JsonConvert.SerializeObject(model, serializerSettings);
-            return new OkObjectResult(sitemapJson);//($"{{Sitemap:{sitemapJson},Model:{modelJson}}}");
-        }
+        }       
 
         /// <summary>
         /// Gets the sitemap with the specified id or default sitemap if Empty.

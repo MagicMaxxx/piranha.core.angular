@@ -24,40 +24,45 @@ import { WildCardComponent } from './wildcard/wildcard.component';
     RouterModule.forRoot([
       { path: "home", redirectTo: "" },
       {
-        path: '', component: CmsComponent, data: { reuse: true },
-        //children: [
-        //  { path: '**', component: WildCardComponent }
-        //],
+        path: "", component: CmsComponent, data: { reuse: true },
+        children: [
+          //  { path: '**', component: WildCardComponent },
+         
+        ],
         resolve: {
           sitemap: SitemapResolve
         }
-      }      
+      }
+      
+
     ])
   ],
   entryComponents: [
-    WildCardComponent,
-    CmsComponent,
     ArchiveComponent,
+    ErrorComponent,
     PageComponent,
     PostComponent,
-    StartComponent,
     TeasersComponent,
-    ErrorComponent
+    StartComponent,
+    WildCardComponent,
+    CmsComponent
   ],
   declarations: [
-    FirstParagraphPipe,
-    WildCardComponent,
-    CmsComponent,
-    BlockComponent,
     ArchiveComponent,
+    ErrorComponent,
     PageComponent,
     PostComponent,
-    StartComponent,
     TeasersComponent,
-    ErrorComponent
+    StartComponent,
+    WildCardComponent,
+    CmsComponent,
+    FirstParagraphPipe,
+    BlockComponent
   ],
   exports: [
     RouterModule,
+    StartComponent,
+
     FirstParagraphPipe,
     BlockComponent,
     WildCardComponent,
@@ -65,7 +70,6 @@ import { WildCardComponent } from './wildcard/wildcard.component';
     ArchiveComponent,
     PageComponent,
     PostComponent,
-    StartComponent,
     TeasersComponent,
     ErrorComponent
   ],
@@ -84,7 +88,7 @@ export class CmsModule {
         {
           provide: RouteReuseStrategy,
           useClass: RouteReusableStrategy
-        }        
+        }
       ]
     };
   }

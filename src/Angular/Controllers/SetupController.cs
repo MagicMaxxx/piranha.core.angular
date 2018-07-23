@@ -40,7 +40,7 @@ namespace Angular.Controllers
         public IActionResult Seed()
         {
             if (api.Pages.GetAll().Count() != 0)
-                return null;
+                return new ForbidResult();
 
             // Get the default site
             var site = api.Sites.GetDefault();
@@ -125,7 +125,7 @@ namespace Angular.Controllers
             });
             api.Pages.Save(startPage);
 
-            return Redirect("~/");
+            return new OkResult();
         }
     }
 }

@@ -1,3 +1,4 @@
+using Angular.Models;
 using Angular.Models.Blocks;
 using Angular.Models.Fields;
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Piranha;
+using Piranha.AspNetCore.Identity.MySQL;
 using Piranha.AspNetCore.Identity.SQLite;
+using Piranha.AspNetCore.Identity.SQLServer;
 using System;
 
 namespace Angular
@@ -27,24 +30,34 @@ namespace Angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(config => {
+            var appsettingsSection = Configuration.GetSection("AppSettings");
+
+            services.AddMvc(config =>
+            {
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddPiranhaFileStorage();
             services.AddPiranhaImageSharp();
 
-            // SQLite
-            services.AddPiranhaEF(options => options.UseSqlite("Filename=./piranha.db"));
-            services.AddPiranhaIdentityWithSeed<IdentitySQLiteDb>(options => options.UseSqlite("Filename=./piranha.db"));
+            var dbType = appsettingsSection["DbType"];
+            var connectionString = Configuration.GetConnectionString(dbType);
+            if (dbType == "SqlLite")
+            {
+                services.AddPiranhaEF(options => options.UseSqlite(connectionString));
+                services.AddPiranhaIdentityWithSeed<IdentitySQLiteDb>(options => options.UseSqlite(connectionString));
+            }
+            else if (dbType == "SQLServer")
+            {
+                services.AddPiranhaEF(options => options.UseSqlServer(connectionString));
+                services.AddPiranhaIdentityWithSeed<IdentitySQLServerDb>(options => options.UseSqlServer(connectionString));
+            }
+            else if (dbType == "SqlLite")
+            {
+                services.AddPiranhaEF(options => options.UseMySql(connectionString));
+                services.AddPiranhaIdentityWithSeed<IdentityMySQLDb>(options => options.UseMySql(connectionString));
+            }
 
-            // SQLServer
-            //services.AddPiranhaEF(options => options.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=piranha.core;Integrated Security=True;MultipleActiveResultSets=True"));
-            //services.AddPiranhaIdentityWithSeed<IdentitySQLServerDb>(options => options.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=piranha.core;Integrated Security=True;MultipleActiveResultSets=True"));
-
-            // MySQL
-            //services.AddPiranhaEF(options => options.UseMySql("server=localhost;port=3306;database=piranha;uid=root;password=password"));
-            //services.AddPiranhaIdentityWithSeed<IdentityMySQLDb>(options => options.UseMySql("server=localhost;port=3306;database=piranha;uid=root;password=password"));
             services.AddPiranhaManager();
 
             // In production, the Angular files will be served from this directory
@@ -66,7 +79,7 @@ namespace Angular
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            
+
             // Initialize Piranha
             var api = services.GetService<IApi>();
             App.Init(api);
@@ -91,7 +104,7 @@ namespace Angular
             var postTypeBuilder = new Piranha.AttributeBuilder.PostTypeBuilder(api)
                 .AddType(typeof(Models.BlogPost));
             postTypeBuilder.Build()
-                .DeleteOrphans();           
+                .DeleteOrphans();
 
             // Register middleware
             app.UseAuthentication();

@@ -29,7 +29,7 @@ export class SitemapService {
               this.onSuccessfulGetSiteMap(result);
               observ.next(result);
             } else {
-              this.router.navigate(["/setup"]);
+              this.router.navigate(["/PiranhaCmsSetup"]);
             }
 
             observ.complete();

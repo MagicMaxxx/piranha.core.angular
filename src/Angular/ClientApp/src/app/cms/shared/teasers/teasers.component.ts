@@ -16,16 +16,46 @@ export class TeasersComponent {
   @Input()
   set model(val: any) {
     this._model = val;
-    this.hasTeasers = val.length > 0;
-    this.teaserWidth = this.hasTeasers ? 12 / val.length : 0;
+    this.setTeaserSize();
   };
 
   get model(): any {
     return this._model;
   }
 
-  teaserWidth: number;
-  hasTeasers: boolean;
+ // hasTeasers: boolean;
+
+  teasers: any;
 
   constructor() { }
+
+  private setTeaserSize() {
+    this.teasers = [];
+    if (this.model && this.model.length > 0) {
+      let pos = 0;
+      let size = 0;
+
+      while (pos < this.model.length) {
+        let rest = this.model.length - pos;
+        let cols = 0;
+
+        if (rest == 1) {
+          size = 8;
+          cols = 1;
+        } else if (rest <= 4 && rest % 3 != 0 && rest % 2 == 0) {
+          size = 6;
+          cols = 2;
+        } else {
+          size = 4;
+          cols = 3;
+        }
+        for (let n = 0; n < cols; n++) {
+          var teaser = this.model[pos + n];
+          teaser.size = size;
+          this.teasers.push(teaser);
+        }
+        pos += cols;
+      }
+    }
+  }
 }

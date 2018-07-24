@@ -10,15 +10,13 @@ import { Router } from '@angular/router';
 
 export class CmsSetupComponent {
 
-  constructor(private router: Router, private http: HttpClient) {
-
+  constructor(private http: HttpClient) {
   }
 
   seed() {
     return this.http.get("api/setup/seed")
       .subscribe((result) => {
-        console.log("seeded");
-        this.router.navigate(["/"]);
+        document.location.replace("/");        
       },
       (errors: any) => { });      
   }

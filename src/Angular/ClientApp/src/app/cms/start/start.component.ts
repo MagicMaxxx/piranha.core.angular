@@ -8,7 +8,7 @@ import { fadeInAnimation } from '../shared/fade-in.animation';
     selector: 'start',
   templateUrl: './start.component.html',
   animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': "" }
+ // host: { '[@fadeInAnimation]': "" }
 })
 
 export class StartComponent implements OnDestroy{

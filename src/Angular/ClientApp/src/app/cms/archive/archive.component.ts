@@ -8,7 +8,7 @@ import { fadeInAnimation } from '../shared/fade-in.animation';
   selector: 'archive',
   templateUrl: './archive.component.html',
   animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': "" }
+  //host: { '[@fadeInAnimation]': "" }
 })
 
 export class ArchiveComponent implements OnDestroy{

@@ -10,6 +10,7 @@ import { PageComponent } from './page/page.component';
 import { PostComponent } from './post/post.component';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { BlockComponent } from './shared/block/block.component';
+import { ImgBackgroundDirective } from './shared/image-background.directive';
 import { TeasersComponent } from './shared/teasers/teasers.component';
 import { FirstParagraphPipe } from './shared/utils';
 import { SitemapResolve } from './sitemap.resolve';
@@ -26,15 +27,13 @@ import { WildCardComponent } from './wildcard/wildcard.component';
       {
         path: "", component: CmsComponent, data: { reuse: true },
         children: [
-          //  { path: '**', component: WildCardComponent },
-         
+          { path: '**', component: WildCardComponent },
+
         ],
         resolve: {
           sitemap: SitemapResolve
         }
       }
-      
-
     ])
   ],
   entryComponents: [
@@ -56,13 +55,14 @@ import { WildCardComponent } from './wildcard/wildcard.component';
     StartComponent,
     WildCardComponent,
     CmsComponent,
+    ImgBackgroundDirective,
     FirstParagraphPipe,
     BlockComponent
   ],
   exports: [
     RouterModule,
     StartComponent,
-
+    ImgBackgroundDirective,
     FirstParagraphPipe,
     BlockComponent,
     WildCardComponent,

@@ -58,6 +58,7 @@ export class SitemapService {
         siteRoutes.push({ path: link, component: StartComponent });
       } else if (route.PageTypeName === "Blog Archive") {
         siteRoutes.push({ path: link, component: ArchiveComponent });
+        siteRoutes.push({ path: link + '/category/:id', component: ArchiveComponent });
         for (let post of route.Items) {
           siteRoutes.push({ path: post.Permalink.substring(1), component: PostComponent });
         }

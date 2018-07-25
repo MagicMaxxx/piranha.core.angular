@@ -24,7 +24,7 @@
             <h2><a [routerLink]="post.Permalink">{{post.Title}}</a></h2>
             <p>
               <strong>{{post.Published | date: 'dd/MM/yyyy'}}</strong> in
-              <a [routerLink]="model.Permalink + '/category/' + post.Category.Slug">{{post.Category.Title}}</a>
+              <a [routerLink]="[model.Permalink + '/category', post.Category.Slug]">{{post.Category.Title}}</a>
             </p>
           </div>
           <div class="col-sm-9">

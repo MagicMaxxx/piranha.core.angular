@@ -1,39 +1,16 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { CmsService } from '../cms.service';
-import { fadeInAnimation } from '../shared/fade-in.animation';
+import { CmsBasePage } from '../shared/cms-base.page';
 
 @Component({
     selector: 'page',
-  templateUrl: './page.component.html',
-  animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': "" }
+  templateUrl: './page.component.html'
 })
 
-export class PageComponent implements OnDestroy{
+export class PageComponent extends CmsBasePage {
 
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
-  model: any;
-  third: any;
-  isLoading: boolean = true;
-  constructor(private cmsService: CmsService) {
 
-    this.cmsService.loadingChanged
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((value) => {
-        this.isLoading = value;
-      });
-
-    this.cmsService.modelChanged
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((value) => {       
-        this.model = value[0];        
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  constructor(cmsService: CmsService) {
+    super(cmsService);
   }
 }

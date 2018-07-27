@@ -12,7 +12,6 @@ import { StartComponent } from './start/start.component';
 export class SitemapService {
 
   private sitemap: any;
-  private errors: any;
 
   constructor(private router: Router, private cmsService: CmsService) { }
 
@@ -73,10 +72,12 @@ export class SitemapService {
     this.router.resetConfig(routes);
 
     this.cmsService.onSuccessfulGetSiteMap(result);
-    this.router.navigate([this.router.url])
+
+    this.router.navigate([document.location.pathname.substring(1)], { preserveFragment: true, skipLocationChange: false });
+    
   }
 
   private onUnsuccessful(result: any) {
-    //this.errors = errors;
+    console.log(result);
   }
 }

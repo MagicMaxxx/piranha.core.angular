@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
 import { NavigationStart, Router } from "@angular/router";
@@ -51,22 +51,22 @@ export class CmsService {
       }, 50);
     } else if (route.PageTypeName === "Start page") {
       this.getStartPage(route.Id)
-        .subscribe((result) => this.onSuccessfulGetModel(result),
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, false),
           (errors: any) => this.onUnsuccessful(errors),
           () => this.loadingChanged.next(false));
     } else if (route.PageTypeName === "Blog Archive") {
       this.getArchive(route.Id)
-        .subscribe((result) => this.onSuccessfulGetModel(result),
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, false),
           (errors: any) => this.onUnsuccessful(errors),
           () => this.loadingChanged.next(false));
     } else if (route.PageTypeName === "BlogPost") {
       this.getPost(route.Id)
-        .subscribe((result) => this.onSuccessfulGetModel(result),
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, true),
           (errors: any) => this.onUnsuccessful(errors),
           () => this.loadingChanged.next(false));
     } else if (route.PageTypeName === "Standard page") {
       this.getPage(route.Id)
-        .subscribe((result) => this.onSuccessfulGetModel(result),
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, true),
           (errors: any) => this.onUnsuccessful(errors),
           () => this.loadingChanged.next(false));
     }
@@ -86,19 +86,26 @@ export class CmsService {
   }
 
   public onSuccessfulGetSiteMap(result): void {
+    
     this.sitemap = result;
     this.sitemapChanged.next(this.sitemap);
   }
 
-  public onSuccessfulGetModel(result: any, fronCache: boolean = false) {
+  public onSuccessfulGetModel(result: any, fronCache: boolean, altMunu: boolean = null) {
     if (!fronCache) {
       this.routeCache.push(result);
     }
+
+    if (altMunu != null) {
+      result.altMunu = altMunu;
+    }
+
     if (result.RedirectUrl && result.RedirectUrl !== "") {
       document.location.replace(result.RedirectUrl);
     } else {
       this.model = result;
-      this.modelChanged.next([this.model, this.currentPage, this.subSitemap]);
+      this.modelChanged.next(this.model);
+      //, this.currentPage, this.subSitemap]
 
       this.title.setTitle(this.model.Title);
 

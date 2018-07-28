@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-faded">
+        <nav class="navbar navbar-expand-sm bg-faded" [ngClass]="{'navbar-dark': !isLoading && !model.altMunu, 'navbar-light': !isLoading && model.altMunu}">
           <button class="navbar-toggler navbar-toggler-right" aria-label="Toggle navigation" (click)="toggle()">
             <span class="navbar-toggler-icon"></span>
           </button>

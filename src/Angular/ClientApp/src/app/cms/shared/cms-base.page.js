@@ -19,12 +19,12 @@ var CmsBasePage = /** @class */ (function () {
             .pipe(operators_1.takeUntil(this.ngUnsubscribe))
             .subscribe(function (value) {
             _this.model = value;
-            console.log(_this.model);
         });
         this.cmsService.sitemapChanged
             .pipe(operators_1.takeUntil(this.ngUnsubscribe))
             .subscribe(function (value) {
             _this.sitemap = value;
+            console.log(_this.sitemap);
         });
     };
     CmsBasePage.prototype.ngOnDestroy = function () {

@@ -22,7 +22,6 @@ export class CmsService {
   private currentPage: string;
 
   constructor(private http: HttpClient, private router: Router, private meta: Meta, private title: Title) {
-
     this.currentPage = router.url;
 
     router.events.subscribe((val) => {
@@ -41,6 +40,7 @@ export class CmsService {
     let route = this.getRouteId(this.sitemap, this.currentPage);
 
     if (!route) {
+      //timeout is to allow the view to load before sending the model from cache
       setTimeout(() => {
         this.modelChanged.next({ altMunu: true });
         this.loadingChanged.next(false);
@@ -78,6 +78,16 @@ export class CmsService {
         .subscribe((result) => this.onSuccessfulGetModel(result, false, true),
           (errors: any) => this.onUnsuccessful(errors),
           () => this.loadingChanged.next(false));
+    } else if (route.PageTypeName === "Category") {
+      this.getArchive(route.ParentId, null, null, null, route.Id)
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, false),
+          (errors: any) => this.onUnsuccessful(errors),
+          () => this.loadingChanged.next(false));
+    } else if (route.PageTypeName === "Tag") {
+      this.getArchive(route.ParentId, null, null, null, null, route.Id)
+        .subscribe((result) => this.onSuccessfulGetModel(result, false, false),
+          (errors: any) => this.onUnsuccessful(errors),
+          () => this.loadingChanged.next(false));
     }
   }
 
@@ -95,9 +105,9 @@ export class CmsService {
   }
 
   public onSuccessfulGetSiteMap(result): void {
-
     this.sitemap = result;
     this.sitemapChanged.next(this.sitemap);
+    console.log(this.sitemap);
   }
 
   public onSuccessfulGetModel(result: any, fronCache: boolean, altMunu: boolean = null) {

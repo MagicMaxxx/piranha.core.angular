@@ -25,14 +25,14 @@ export class CmsBasePage implements OnInit, OnDestroy{
     this.cmsService.modelChanged
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value) => {
-        this.model = value;
-        console.log(this.model);
+        this.model = value;        
       });
 
     this.cmsService.sitemapChanged
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value) => {
         this.sitemap = value;
+        console.log(this.sitemap);
       });
   }
 

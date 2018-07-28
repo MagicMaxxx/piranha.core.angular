@@ -50,7 +50,7 @@ namespace Angular.Controllers
             serializerSettings.Converters.Add(new ImageCoverter(api));
             serializerSettings.Converters.Add(new PageFieldCoverter());
             serializerSettings.Converters.Add(new PostFieldCoverter());
-        }       
+        }
 
         /// <summary>
         /// Gets the sitemap with the specified id or default sitemap if Empty.
@@ -73,25 +73,26 @@ namespace Angular.Controllers
             {
                 if (partial.PageTypeName == "Blog Archive")
                 {
-                    ((List<SitemapItem>)partial.Items).AddRange(GetArchiveItems(partial.Id, partial.Level));
+                    ((List<SitemapItem>)partial.Items).AddRange(GetArchiveItems(partial));
                 }
             }
 
             return model;
         }
 
-        private List<SitemapItem> GetArchiveItems(Guid id, int level)
+        private List<SitemapItem> GetArchiveItems(SitemapItem partial)
         {
             var model = new List<SitemapItem>();
-            var posts = api.Posts.GetAll(id).Where(p => p.Published <= DateTime.Now).ToList();
+            var posts = api.Posts.GetAll(partial.Id).Where(p => p.Published <= DateTime.Now).ToList();
 
-            for (int i = 0; i < posts.Count; i++)
+            var sortOrder = 0;
+
+            foreach (DynamicPost item in posts)
             {
-                DynamicPost item = posts[i];
                 var smItem = new SitemapItem
                 {
-                    ParentId = id,
-                    SortOrder = i,
+                    ParentId = partial.Id,
+                    SortOrder = sortOrder++,
                     Title = item.Title,
                     NavigationTitle = item.Title,
                     PageTypeName = item.TypeId,
@@ -100,10 +101,51 @@ namespace Angular.Controllers
                     Created = item.Created,
                     LastModified = item.LastModified,
                     Id = item.Id,
-                    Level = level + 1
+                    Level = partial.Level + 1
                 };
                 model.Add(smItem);
             }
+
+            var categories = api.Categories.GetAll(partial.Id).ToList();
+            foreach (var category in categories)
+            {
+                var smItem = new SitemapItem
+                {
+                    ParentId = partial.Id,
+                    SortOrder = sortOrder++,
+                    Title = category.Title,
+                    NavigationTitle = category.Title,
+                    PageTypeName = "Category",
+                    Permalink = $"{partial.Permalink}/category/{category.Slug}",
+                    Created = category.Created,
+                    LastModified = category.LastModified,
+                    Id = category.Id,
+                    Level = partial.Level + 1,
+                    IsHidden = true
+                };
+                model.Add(smItem);
+            }
+
+            var tags = api.Tags.GetAll(partial.Id).ToList();
+            foreach (var tag in tags)
+            {
+                var smItem = new SitemapItem
+                {
+                    ParentId = partial.Id,
+                    SortOrder = sortOrder++,
+                    Title = tag.Title,
+                    NavigationTitle = tag.Title,
+                    PageTypeName = "Tag",
+                    Permalink = $"{partial.Permalink}/tag/{tag.Slug}",
+                    Created = tag.Created,
+                    LastModified = tag.LastModified,
+                    Id = tag.Id,
+                    Level = partial.Level + 1,
+                    IsHidden = true
+                };
+                model.Add(smItem);
+            }
+
             return model;
         }
 
@@ -121,9 +163,15 @@ namespace Angular.Controllers
             Models.BlogArchive model;
 
             if (category.HasValue)
+            {
                 model = api.Archives.GetByCategoryId<Models.BlogArchive>(id, category.Value, page, year, month);
+                model.Id = category.Value;
+            }
             else if (tag.HasValue)
+            {
                 model = api.Archives.GetByTagId<Models.BlogArchive>(id, tag.Value, page, year, month);
+                model.Id = tag.Value;
+            }
             else model = api.Archives.GetById<Models.BlogArchive>(id, page, year, month);
 
             var json = JsonConvert.SerializeObject(model, serializerSettings);

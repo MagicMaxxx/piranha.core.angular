@@ -17,6 +17,7 @@ import { SitemapResolve } from './sitemap.resolve';
 import { SitemapService } from './sitemap.service';
 import { StartComponent } from './start/start.component';
 import { WildCardComponent } from './wildcard/wildcard.component';
+import { CmsSetupModule } from '../cms-setup/cms-setup.module';
 
 @NgModule({
   imports: [
@@ -60,6 +61,8 @@ import { WildCardComponent } from './wildcard/wildcard.component';
     BlockComponent
   ],
   exports: [
+     //Remove below route to remove Cms Setup
+    CmsSetupModule,
     RouterModule,
     StartComponent,
     ImgBackgroundDirective,

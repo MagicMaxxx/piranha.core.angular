@@ -13,7 +13,7 @@ export class CmsService {
   public static url: string = "api/cms";
 
   sitemapChanged: Subject<any> = new Subject<any>();
-  modelChanged: Subject<any[]> = new Subject<any[]>();
+  modelChanged: Subject<any> = new Subject<any>();
   loadingChanged: Subject<boolean> = new Subject<boolean>();
   private errors: any;
   private sitemap: any;
@@ -30,8 +30,8 @@ export class CmsService {
         this.currentPage = val.url;
         this.getModel();
       }
-    });   
-  } 
+    });
+  }
 
   private getModel() {
     if (!this.sitemap || !this.currentPage) {
@@ -39,6 +39,15 @@ export class CmsService {
     }
 
     let route = this.getRouteId(this.sitemap, this.currentPage);
+
+    if (!route) {
+      setTimeout(() => {
+        this.modelChanged.next({ altMunu: true });
+        this.loadingChanged.next(false);
+      }, 50);
+      return;
+    }
+
     this.subSitemap = route.Items;
     let model = this.routeCache.find(model => {
       return model.Id === route.Id;
@@ -86,7 +95,7 @@ export class CmsService {
   }
 
   public onSuccessfulGetSiteMap(result): void {
-    
+
     this.sitemap = result;
     this.sitemapChanged.next(this.sitemap);
   }
@@ -121,7 +130,7 @@ export class CmsService {
 
   private onUnsuccessful(result: any) {
     //this.errors = errors;
-  }  
+  }
 
   public getSiteMap(id: string = null): Observable<any> {
     const url: string = `${CmsService.url}/sitemap?id=${id}`;

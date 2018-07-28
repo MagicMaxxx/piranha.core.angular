@@ -1,3 +1,4 @@
+using Angular.Models.Fields;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Piranha;
@@ -83,7 +84,7 @@ namespace Angular.Controllers
             post.Title = "Dapibus Cursus Justo";
             post.MetaKeywords = "Nullam, Mollis, Cras, Sem, Ipsum";
             post.MetaDescription = "Aenean lacinia bibendum nulla sed consectetur.";
-            post.Heading.PrimaryImage = bannerId;
+            post.Heading.PrimaryImage = SizedImageField.WithSize(bannerId, 1100, 400);
             post.Heading.Ingress = "Sed posuere consectetur est at lobortis. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.";
             post.Blocks.Add(new HtmlBlock
             {

@@ -17,22 +17,24 @@ export class SitemapService {
 
   load(): Observable<any> {
     return new Observable<any>(observ => {
+      console.log(document.location);
       if (this.sitemap) {
         observ.next(this.sitemap);
         observ.complete();
       } else {
         this.cmsService.getSiteMap()
           .subscribe((result) => {
+
             if (result.length > 0) {
               this.sitemap = result;
               this.onSuccessfulGetSiteMap(result);
               observ.next(result);
             } else {
-              this.router.navigate(["/PiranhaCmsSetup"]);
+              console.log("Remove else from sitemap.service to remove lazy loading of Cms Setup");
+              this.router.navigate(["PiranhaCmsSetup"]);
             }
-
             observ.complete();
-           
+
           },
             (errors: any) => {
               this.onUnsuccessful(errors);
@@ -44,7 +46,7 @@ export class SitemapService {
   }
 
   private onSuccessfulGetSiteMap(result): void {
-    let routes = this.router.config
+    let routes = this.router.config;
     let parent = routes.find(route => {
       return route.path === ""
     });
@@ -74,7 +76,7 @@ export class SitemapService {
     this.cmsService.onSuccessfulGetSiteMap(result);
 
     this.router.navigate([document.location.pathname.substring(1)], { preserveFragment: true, skipLocationChange: false });
-    
+
   }
 
   private onUnsuccessful(result: any) {

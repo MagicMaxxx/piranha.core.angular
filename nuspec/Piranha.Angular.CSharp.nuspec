@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Piranha.Angular.CSharp</id>
+    <version>5.1.0</version>
+    <title>Piranha CMS Angular Web Template</title>
+    <authors>John Cutburth</authors>
+    <owners>John Cutburth</owners>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>    
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>http://github.com/piranhacms/piranha.core</projectUrl>
+    <iconUrl>http://piranhacms.org/assets/twitter-shield.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Piranha CMS Angular Web Template</description>
+    <releaseNotes>
+      See the changelog available at:
+      https://github.com/piranhacms/piranha.core/wiki/changelog
+    </releaseNotes>
+    <copyright>Copyright 2018 (c) Håkan Edling</copyright>
+    <tags>cms mvc angular aspnetcore netstandard</tags>
+  </metadata>
+  <files>
+    <file src="content\wwwroot\_._" target="content\wwwroot\_._" />
+    <file src="..\src\Angular\.template.config\template.json" target="content\.template.config\template.json" />
+    <file src="..\src\Angular\assets\scss\*.*" target="content\assets\scss" />
+    <file src="..\src\Angular\Controllers\*.*" target="content\Controllers" />
+    <file src="..\src\Angular\Models\**\*.*" target="content\Models" />
+    <file src="..\src\Angular\seed\*.*" target="content\seed" />
+    <file src="..\src\Angular\Views\Cms\**\*.*" target="content\Views\Cms" />
+    <file src="..\src\Angular\Views\Setup\*.*" target="content\Views\Setup" />
+    <file src="..\src\Angular\Views\Shared\**\*.*" target="content\Views\Shared" />
+    <file src="..\src\Angular\Views\*.*" target="content\Views" />
+    <file src="..\src\Angular\wwwroot\css\*.*" target="content\wwwroot\css" />
+    <file src="..\src\Angular\Angular.csproj" target="content\Angular.csproj" />
+    <file src="..\src\Angular\compilerconfig.json" target="content\compilerconfig.json" />
+    <file src="..\src\Angular\compilerconfig.json.defaults" target="content\compilerconfig.json.defaults" />
+    <file src="..\src\Angular\gulpfile.js" target="content\gulpfile.js" />
+    <file src="..\src\Angular\package.json" target="content\package.json" />
+    <file src="..\src\Angular\Program.cs" target="content\Program.cs" />
+    <file src="..\src\Angular\Startup.cs" target="content\Startup.cs" />
+  </files>
+</package>

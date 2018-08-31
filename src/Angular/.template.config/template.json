@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "John Cutburth",
+  "classifications": [ "Web", "MVC", "CMS", "Angular" ],
+  "identity": "Piranha.Angular.CSharp",
+  "name": "ASP.NET Core Angular with Piranha CMS",
+  "tags": {
+    "language": "C#"
+  },
+  "shortName": "angularpiranha",
+  "sourceName": "Angular"
+}

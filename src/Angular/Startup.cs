@@ -52,7 +52,7 @@ namespace Angular
                 services.AddPiranhaEF(options => options.UseSqlServer(connectionString));
                 services.AddPiranhaIdentityWithSeed<IdentitySQLServerDb>(options => options.UseSqlServer(connectionString));
             }
-            else if (dbType == "SqlLite")
+            else if (dbType == "MySql")
             {
                 services.AddPiranhaEF(options => options.UseMySql(connectionString));
                 services.AddPiranhaIdentityWithSeed<IdentityMySQLDb>(options => options.UseMySql(connectionString));

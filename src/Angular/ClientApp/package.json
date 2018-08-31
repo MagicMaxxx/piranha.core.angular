@@ -28,6 +28,7 @@
     "bootstrap": "^4.1.2",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.6",
+    "url-parse": "^1.4.3",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
@@ -50,7 +51,8 @@
     "protractor": "^5.4.0",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "~2.5.3",
+    "url-parse": "^1.4.3"
   },
   "optionalDependencies": {
     "node-sass": "^4.9.0"

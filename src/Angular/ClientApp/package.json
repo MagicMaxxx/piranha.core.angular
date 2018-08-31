@@ -48,7 +48,9 @@
     "protractor": "^5.4.0",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "~2.5.3",
+    "chokidar": "^2.0.3",
+    "less": "^3.0.2"
   },
   "optionalDependencies": {
     "node-sass": "^4.9.0"

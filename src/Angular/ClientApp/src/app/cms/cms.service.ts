@@ -107,7 +107,6 @@ export class CmsService {
   public onSuccessfulGetSiteMap(result): void {
     this.sitemap = result;
     this.sitemapChanged.next(this.sitemap);
-    console.log(this.sitemap);
   }
 
   public onSuccessfulGetModel(result: any, fronCache: boolean, altMunu: boolean = null) {

@@ -32,7 +32,6 @@ export class CmsBasePage implements OnInit, OnDestroy{
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value) => {
         this.sitemap = value;
-        console.log(this.sitemap);
       });
   }
 

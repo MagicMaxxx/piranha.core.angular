@@ -7,7 +7,7 @@ namespace Angular.Models
     /// Basic blog page.
     /// </summary>
     [PageType(Title = "Blog Archive", UseBlocks = false)]
-    public class BlogArchive : BlogPage<BlogArchive>
+    public class BlogArchive : ArchivePage<BlogArchive>
     {
         /// <summary>
         /// Gets/sets the archive heading.

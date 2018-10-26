@@ -80,9 +80,8 @@ namespace Angular
                 app.UseHsts();
             }
 
-            // Initialize Piranha
-            var api = services.GetService<IApi>();
-            App.Init(api);
+            // Initialize Piranha);
+            App.Init();
 
             // Configure cache level
             App.CacheLevel = Piranha.Cache.CacheLevel.None;
@@ -94,6 +93,7 @@ namespace Angular
             App.Blocks.Register<SliderGroup>();
             App.Blocks.Register<SizedImageBlock>();
 
+            var api = services.GetService<IApi>();
             // Build types
             var pageTypeBuilder = new Piranha.AttributeBuilder.PageTypeBuilder(api)
                 .AddType(typeof(Models.BlogArchive))
